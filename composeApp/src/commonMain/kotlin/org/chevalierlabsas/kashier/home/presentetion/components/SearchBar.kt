@@ -1,3 +1,4 @@
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.Text
@@ -16,10 +17,14 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun Searchbar(
     modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
-        value = "",
-        onValueChange = { }, placeholder = {
+        modifier = modifier.fillMaxWidth(),
+        value = value,
+        onValueChange = onValueChange,
+        placeholder = {
             Text(stringResource(Res.string.searchbar_hint))
         },
         trailingIcon = {
