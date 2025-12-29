@@ -1,20 +1,14 @@
 package org.chevalierlabsas.kashier.core
-import History
-import androidx.compose.runtime.*
+
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import org.chevalierlabsas.kashier.home.presentation.HomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App() {
-    var currentPage by remember { mutableStateOf("HOME") }
-
-    when (currentPage) {
-        "HOME" -> HomeScreen(
-            onOpenHistory = { currentPage = "HISTORY" }
-        )
-
-        "HISTORY" -> History(
-            onBack = { currentPage = "HOME" }
-        )
+    MaterialTheme {
+        HomeScreen()
     }
 }

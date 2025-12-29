@@ -1,29 +1,28 @@
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.runtime.Composable
-import androidx.compose.material3.Text
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.material3.Icon
-import kashier.composeapp.generated.resources.Res
-import kashier.composeapp.generated.resources.searchbar_hint
+package org.chevalierlabsas.kashier.home.presentation.components
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import kashier.composeapp.generated.resources.Res
+import kashier.composeapp.generated.resources.searchbar_hint
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Preview
 fun Searchbar(
     modifier: Modifier = Modifier,
-    value: String,
-    onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
-        modifier = modifier.fillMaxWidth(),
-        value = value,
-        onValueChange = onValueChange,
+        modifier = modifier,
+        value = "",
+        onValueChange = { },
+        shape = RoundedCornerShape(8.dp),
         placeholder = {
             Text(stringResource(Res.string.searchbar_hint))
         },
@@ -34,14 +33,24 @@ fun Searchbar(
             )
         },
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = MaterialTheme.colorScheme.primary,
-            unfocusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
-            focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            cursorColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            focusedTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            unfocusedTrailingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            focusedTextColor = MaterialTheme.colorScheme.onPrimaryContainer
+            focusedBorderColor = MaterialTheme.colorScheme.tertiary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.tertiaryContainer,
+            focusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            cursorColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            focusedTrailingIconColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            unfocusedTrailingIconColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            focusedTextColor = MaterialTheme.colorScheme.onTertiaryContainer
         )
     )
+}
+
+@Preview
+@Composable
+fun SearchbarPreview() {
+    Surface {
+        Searchbar(
+            modifier = Modifier.padding(16.dp)
+        )
+    }
 }
