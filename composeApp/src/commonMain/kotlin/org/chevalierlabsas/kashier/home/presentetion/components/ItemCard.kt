@@ -25,6 +25,7 @@ import kashier.composeapp.generated.resources.edit_item
 import org.chevalierlabsas.kashier.home.domain.Item
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.Column
 
 @Composable
 fun ItemCard(
@@ -36,22 +37,29 @@ fun ItemCard(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondary,
-            contentColor = MaterialTheme.colorScheme.onSecondary
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
         ),
         shape = RoundedCornerShape(8.dp)
     ) {
         Row(
-            modifier = Modifier.padding(start = 16.dp, end = 8.dp),
+            modifier = Modifier.padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = item.name)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                modifier = Modifier.weight(1f),
-                text = item.price.toString(),
-                fontWeight = FontWeight.Bold
-            )
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = item.name,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = "Rp ${item.price.toLong()}",
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
             IconButton(
                 onClick = { onEdit(item) },
             ) {
@@ -71,6 +79,7 @@ fun ItemCard(
         }
     }
 }
+
 
 @Preview
 @Composable

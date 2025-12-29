@@ -8,68 +8,68 @@ class DummyDataSource {
         Item(
             id = 1,
             userId = 1,
-            name = "Item 1",
-            price = 100000.0
+            name = "Telur 0.5 KG",
+            price = 12000.0
         ),
         Item(
             id = 2,
             userId = 1,
-            name = "Item 2",
-            price = 200000.0
+            name = "Jeruk Mandarin 1 KG",
+            price = 30000.0
         ),
         Item(
             id = 3,
             userId = 1,
-            name = "Item 3",
-            price = 300000.0
+            name = "Alpukat 250 GR",
+            price = 50000.0
         ),
         Item(
             id = 4,
             userId = 1,
-            name = "Item 4",
-            price = 400000.0
+            name = "Teh Celup 25 PCS",
+            price = 15500.0
         ),
         Item(
             id = 5,
             userId = 1,
-            name = "Item 5",
-            price = 500000.0
+            name = "Kepiting Laut 2 KG",
+            price = 120000.0
         ),
         Item(
             id = 6,
             userId = 1,
-            name = "Item 7",
-            price = 700000.0
+            name = "Kerang 1 KG",
+            price = 70000.0
         ),
         Item(
             id = 8,
             userId = 1,
-            name = "Item 8",
-            price = 800000.0
+            name = "Cumi-Cumi 1 KG",
+            price = 100000.0
         ),
         Item(
             id = 9,
             userId = 1,
-            name = "Item 9",
-            price = 900000.0
+            name = "Udang 100 GR",
+            price = 9000.0
         ),
         Item(
             id = 10,
             userId = 1,
-            name = "Item 10",
-            price = 1000000.0
+            name = "Nasi Putih 1 Porsi",
+            price = 5000.0
         ),
         Item(
             id = 11,
             userId = 1,
-            name = "Item 11",
-            price = 1100000.0
+            name = "Es Kopi",
+            price = 10000.0
         ),
         Item(
             id = 12,
             userId = 1,
-            name = "Item 12",
-            price = 1200000.0
+            name = "Kelapa Muda",
+            price = 12000.0
         ),
     )
 

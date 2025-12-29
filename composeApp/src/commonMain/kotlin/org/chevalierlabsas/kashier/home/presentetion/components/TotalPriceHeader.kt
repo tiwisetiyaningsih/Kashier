@@ -35,7 +35,8 @@ fun TotalPriceHeader(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = "Rp. $totalPrice",
-            style = MaterialTheme.typography.headlineLarge,
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.End
         )
     }

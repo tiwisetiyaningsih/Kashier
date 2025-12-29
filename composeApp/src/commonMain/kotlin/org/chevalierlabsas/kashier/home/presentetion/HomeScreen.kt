@@ -27,8 +27,22 @@ fun HomeScreen() {
 
     var totalPrice by remember { mutableStateOf(0.00) }
     val selectedItems = remember { mutableStateListOf<Item>() }
+    var searchQuery by remember { mutableStateOf("") }
+    var isSearching by remember { mutableStateOf(false) }
     var showSelectedItem by remember { mutableStateOf(true) }
     var showAllItem by remember { mutableStateOf(true) }
+
+    val allItems = DummyDataSource().getData()
+
+    val filteredItems = remember(searchQuery, isSearching) {
+        if (isSearching && searchQuery.isNotBlank()) {
+            allItems.filter {
+                it.name.contains(searchQuery, ignoreCase = true)
+            }
+        } else {
+            allItems
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -41,7 +55,8 @@ fun HomeScreen() {
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = { TODO("Add Item.") },
-                containerColor = MaterialTheme.colorScheme.tertiary,
+                containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
                 text = { Text(text = stringResource(Res.string.add_item_fab_label)) },
                 icon = { Icon(Icons.Filled.Add, contentDescription = stringResource(Res.string.add_item_fab_label)) }
             )
@@ -110,7 +125,24 @@ fun HomeScreen() {
                     }
                 )
             }
-            items(DummyDataSource().getData()) { item ->
+            item {
+                Searchbar(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    value = searchQuery,
+                    onValueChange = {
+                        searchQuery = it
+                        if (it.isBlank()) {
+                            isSearching = false
+                        }
+                    },
+                    onSearch = {
+                        isSearching = true
+                    }
+                )
+            }
+            items(filteredItems) { item ->
                 AnimatedVisibility(
                     visible = showAllItem,
                     enter = fadeIn(),
