@@ -66,6 +66,8 @@ fun SearchbarPreview() {
         Searchbar(
             modifier = Modifier.padding(16.dp),
             value = "",
-        ) { }
+            onValueChange = {},
+            onSearch = {}
+        )
     }
 }

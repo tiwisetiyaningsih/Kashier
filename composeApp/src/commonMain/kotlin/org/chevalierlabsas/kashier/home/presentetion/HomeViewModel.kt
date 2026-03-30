@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.update
 import org.chevalierlabsas.kashier.home.data.DummyDataSource
 import org.chevalierlabsas.kashier.home.domain.Item
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
 
     private val _items = DummyDataSource().getData()
     private val _state = MutableStateFlow(HomeState(items = _items))
@@ -15,135 +15,49 @@ class HomeViewModel: ViewModel() {
 
     fun onEvent(event: HomeEvent) {
         when (event) {
-            HomeEvent.OnShowBottomSheet -> {
-                _state.update { it.copy(isBottomSheetVisible = true) }
-            }
-
-            HomeEvent.OnHideBottomSheet -> {
-                _state.update { it.copy(isBottomSheetVisible = false) }
-            }
-
-            HomeEvent.OnAddNewItem -> addNewItemFromInput()
-
-            HomeEvent.OnHideBottomSheet -> {
-                _state.update {
-                    it.copy(
-                        isBottomSheetVisible = false,
-                        itemBeingEdited = null,
-                        itemNameInput = "",
-                        itemPriceInput = ""
-                    )
-                }
-            }
-
             is HomeEvent.OnRemoveItem -> removeItem(event.item)
             is HomeEvent.OnAddItem -> addItem(event.item)
             is HomeEvent.OnAllItemVisibilityChange -> setAllItemVisibility(event.isVisible)
             is HomeEvent.OnSelectedItemVisibilityChange -> setSelectedItemVisibility(event.isVisible)
             is HomeEvent.OnSearchQueryChange -> updateQuery(event.query)
+            is HomeEvent.OnShowBottomSheet -> showBottomSheet(event.show)
             HomeEvent.OnSearchQuerySubmit -> search()
             HomeEvent.OnSaveTransaction -> saveTransaction()
-
-            is HomeEvent.OnItemNameChange -> {
-                _state.update { it.copy(itemNameInput = event.name) }
-            }
-            is HomeEvent.OnItemPriceChange -> {
-                _state.update { it.copy(itemPriceInput = event.price) }
-            }
-            is HomeEvent.OnEditItem -> {
-                _state.update {
-                    it.copy(
-                        itemBeingEdited = event.item,
-                        itemNameInput = event.item.name,
-                        itemPriceInput = event.item.price.toString(),
-                        isBottomSheetVisible = true
-                    )
-                }
-            }
-
         }
     }
 
+    private fun showBottomSheet(show: Boolean) {
+        _state.update { it.copy(showModalBottomSheet = show) }
+    }
+
     private fun removeItem(item: Item) {
-        if (_state.value.selectedItems.contains(item)) {
-            _state.update { currentState ->
-                currentState.copy(
-                    selectedItems = currentState.selectedItems - item,
-                    totalPrice = (currentState.totalPrice - item.price).coerceAtLeast(0.0)
-                )
-            }
+        _state.update {
+            it.copy(
+                selectedItems = it.selectedItems - item,
+                totalPrice = it.totalPrice - item.price
+            )
         }
     }
 
     private fun saveTransaction() {
-        println("Data berhasil disimpan: ${_state.value.selectedItems}")
-        _state.update {
-            it.copy(selectedItems = emptyList(), totalPrice = 0.0)
-        }
+        TODO("Save Data to API.")
     }
 
     private fun addItem(item: Item) {
-        _state.update { currentState ->
-            currentState.copy(
-                selectedItems = currentState.selectedItems + item,
-                totalPrice = currentState.totalPrice + item.price
+        _state.update {
+            it.copy(
+                selectedItems = it.selectedItems + item,
+                totalPrice = it.totalPrice + item.price
             )
-        }
-    }
-
-    private fun addNewItemFromInput() {
-        val currentState = _state.value
-        val price = currentState.itemPriceInput.toDoubleOrNull() ?: 0.0
-
-        if (currentState.itemBeingEdited != null) {
-
-            // EDIT ITEM
-            val updatedList = currentState.items.map { item ->
-                if (item.id == currentState.itemBeingEdited.id) {
-                    item.copy(
-                        name = currentState.itemNameInput,
-                        price = price
-                    )
-                } else {
-                    item
-                }
-            }
-
-            _state.update {
-                it.copy(
-                    items = updatedList,
-                    itemBeingEdited = null,
-                    itemNameInput = "",
-                    itemPriceInput = ""
-                )
-            }
-
-        } else {
-
-            // TAMBAH ITEM
-            val newItem = Item(
-                id = (0..1000).random(),
-                userId = 1,
-                name = currentState.itemNameInput,
-                price = price
-            )
-
-            _state.update {
-                it.copy(
-                    items = it.items + newItem,
-                    itemNameInput = "",
-                    itemPriceInput = ""
-                )
-            }
         }
     }
 
     private fun setAllItemVisibility(visible: Boolean) {
-        _state.update { it.copy(showAllItem = visible) }
+        _state.update { it.copy(allItemsVisible = visible) }
     }
 
     private fun setSelectedItemVisibility(visible: Boolean) {
-        _state.update { it.copy(showSelectedItem = visible) }
+        _state.update { it.copy(selectedItemVisible = visible) }
     }
 
     private fun search() {
@@ -162,19 +76,9 @@ class HomeViewModel: ViewModel() {
 
     private fun updateQuery(query: String) {
         _state.update { it.copy(searchQuery = query) }
-
-        if (query.isBlank()) {
+        if (state.value.searchQuery.isBlank()) {
             _state.update { it.copy(items = _items) }
-        } else {
-            _state.update {
-                it.copy(
-                    items = _items.filter { item ->
-                        item.name.contains(query, ignoreCase = true)
-                    }
-                )
-            }
         }
     }
-
 
 }
