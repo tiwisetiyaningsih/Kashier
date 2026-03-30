@@ -1,4 +1,4 @@
-package org.chevalierlabsas.kashier.home.presentetion.components
+package org.chevalierlabsas.kashier.home.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -34,7 +34,7 @@ fun TotalPriceHeader(
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Rp. $totalPrice",
+            text = "Rp. ${totalPrice.toLong()}",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.SemiBold,
             textAlign = TextAlign.End
